@@ -1,0 +1,73 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Player.gd" type="Script" id=1]
+[ext_resource path="res://Wallnode.tscn" type="PackedScene" id=2]
+[ext_resource path="res://tile.png" type="Texture" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 8, 8 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 8.5, 8.5 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 16, 152 )
+
+[node name="World" type="Node2D"]
+
+[node name="PlayerNode" type="Node2D" parent="."]
+
+[node name="Player" type="KinematicBody2D" parent="PlayerNode"]
+script = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerNode/Player"]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="PlayerNode/Player"]
+texture = ExtResource( 3 )
+
+[node name="Detect" type="Area2D" parent="PlayerNode/Player"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerNode/Player/Detect"]
+shape = SubResource( 2 )
+
+[node name="Resetter" type="Area2D" parent="PlayerNode"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerNode/Resetter"]
+position = Vector2( -296, 0 )
+shape = SubResource( 3 )
+
+[node name="Wallnode" parent="." instance=ExtResource( 2 )]
+position = Vector2( 288, 0 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Wallnode5" parent="." instance=ExtResource( 2 )]
+position = Vector2( 768, -56 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Wallnode4" parent="." instance=ExtResource( 2 )]
+position = Vector2( 656, 16 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Wallnode3" parent="." instance=ExtResource( 2 )]
+position = Vector2( 520, 40 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Wallnode2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 400, -24 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2( 0.5, 0.5 )
+
+[connection signal="body_shape_entered" from="PlayerNode/Resetter" to="PlayerNode/Player" method="_on_Resetter_body_shape_entered"]
